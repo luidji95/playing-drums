@@ -1,24 +1,31 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+// Select all elements with class 'key'
+const keys = document.querySelectorAll('.key');
 
-setupCounter(document.querySelector('#counter'))
+// Function to play sound
+function playSound(event) {
+    // Find corresponding audio element based on data-key attribute
+    const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+    // If audio element exists, play it
+    if (audio) {
+        audio.currentTime = 0; // Rewind to the start
+        audio.play();
+    }
+}
+
+// Event listener for keydown event on the whole window
+window.addEventListener('keydown', playSound);
+
+// Event listeners for click events on drum elements
+keys.forEach(key => {
+    key.addEventListener('click', function() {
+        // Find corresponding audio element based on data-key attribute
+        const audio = document.querySelector(`audio[data-key="${this.getAttribute('data-key')}"]`);
+        // If audio element exists, play it
+        if (audio) {
+            audio.currentTime = 0; // Rewind to the start
+            audio.play();
+        }
+    });
+});
